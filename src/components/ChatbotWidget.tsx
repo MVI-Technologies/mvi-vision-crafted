@@ -6,7 +6,7 @@
 
 import { useState, useRef, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Trash2 } from 'lucide-react';
+import { X, Send, Trash2 } from 'lucide-react';
 import { useI18n } from '@/i18n/LanguageProvider';
 import WhatsAppIcon from './icons/WhatsAppIcon';
 
@@ -389,7 +389,7 @@ function ChatbotWidget() {
 
   return (
     <>
-      {/* Floating button */}
+      {/* Floating button - WhatsApp style */}
       <div className="fixed bottom-6 right-6 z-50">
         <AnimatePresence>
           {showTooltip && !isOpen && (
@@ -408,14 +408,14 @@ function ChatbotWidget() {
           onClick={() => setIsOpen(true)}
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
-          className={`w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center ${
+          className={`w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:shadow-xl hover:bg-[#22c35e] transition-all flex items-center justify-center ${
             isOpen ? 'hidden' : ''
           }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label={t('chatbot.tooltip')}
         >
-          <MessageCircle className="w-6 h-6" />
+          <WhatsAppIcon size={28} />
         </motion.button>
       </div>
 
