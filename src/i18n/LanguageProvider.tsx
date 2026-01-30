@@ -1,3 +1,4 @@
+// i18n Context Provider for MVI Tech
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { translations, Language, TranslationKey } from './translations';
 
