@@ -1,17 +1,14 @@
 /**
  * MVI Tech Chatbot Widget
  * 
- * Performance-focused business chatbot with WhatsApp integration.
- * 
- * HOW TO EDIT FAQ:
- * - Edit the translations file (src/i18n/translations.ts) to update FAQ answers
- * - Keywords are defined in getIntentFromMessage function below
+ * LLM-powered business chatbot with strict scope and WhatsApp integration.
  */
 
 import { useState, useRef, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Trash2, Phone } from 'lucide-react';
-import { useI18n, TranslationKey } from '@/i18n/LanguageProvider';
+import { MessageCircle, X, Send, Trash2 } from 'lucide-react';
+import { useI18n } from '@/i18n/LanguageProvider';
+import WhatsAppIcon from './icons/WhatsAppIcon';
 
 // Types
 interface Message {
@@ -32,42 +29,7 @@ const STORAGE_KEY = 'mvi_chat_v1';
 const STORAGE_VERSION = 1;
 const EXPIRY_DAYS = 7;
 const WHATSAPP_NUMBER = '5544999641464';
-
-// Intent keywords for routing (works for both PT and EN)
-const INTENT_KEYWORDS: Record<string, string[]> = {
-  price: ['preço', 'preco', 'valor', 'custo', 'quanto', 'custa', 'orçamento', 'orcamento', 'price', 'cost', 'how much', 'budget', 'quote'],
-  timeline: ['prazo', 'tempo', 'demora', 'quanto tempo', 'timeline', 'how long', 'deadline', 'delivery'],
-  app: ['app', 'aplicativo', 'mobile', 'celular', 'ios', 'android', 'react native'],
-  process: ['processo', 'funciona', 'como funciona', 'etapas', 'process', 'how does', 'steps', 'workflow'],
-  stack: ['tecnologia', 'stack', 'linguagem', 'framework', 'react', 'node', 'python', 'technology', 'technologies', 'tech'],
-  support: ['suporte', 'manutenção', 'manutencao', 'support', 'maintenance', 'after', 'post-launch'],
-  branding: ['branding', 'marca', 'logo', 'identidade', 'visual', 'brand', 'identity'],
-  ecommerce: ['ecommerce', 'e-commerce', 'loja', 'shopify', 'vendas', 'shop', 'store', 'sales'],
-};
-
-// Normalize text for matching (remove accents, lowercase)
-function normalizeText(text: string): string {
-  return text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .trim();
-}
-
-// Get intent from message
-function getIntentFromMessage(message: string): string | null {
-  const normalized = normalizeText(message);
-  
-  for (const [intent, keywords] of Object.entries(INTENT_KEYWORDS)) {
-    for (const keyword of keywords) {
-      if (normalized.includes(normalizeText(keyword))) {
-        return intent;
-      }
-    }
-  }
-  
-  return null;
-}
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/business-chat`;
 
 // Storage utilities
 function getStoredChat(): ChatState | null {
@@ -77,7 +39,6 @@ function getStoredChat(): ChatState | null {
     
     const parsed: ChatState = JSON.parse(stored);
     
-    // Check version and expiry
     if (parsed.version !== STORAGE_VERSION || Date.now() > parsed.expiresAt) {
       localStorage.removeItem(STORAGE_KEY);
       return null;
@@ -146,7 +107,7 @@ const ChatMessage = memo(function ChatMessage({ message }: { message: Message })
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
-        className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+        className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
           isUser
             ? 'bg-primary text-primary-foreground rounded-br-md'
             : 'bg-secondary text-secondary-foreground rounded-bl-md'
@@ -157,6 +118,101 @@ const ChatMessage = memo(function ChatMessage({ message }: { message: Message })
     </div>
   );
 });
+
+// Stream chat from LLM
+async function streamChat({
+  messages,
+  lang,
+  onDelta,
+  onDone,
+  onError,
+}: {
+  messages: { role: string; content: string }[];
+  lang: string;
+  onDelta: (deltaText: string) => void;
+  onDone: () => void;
+  onError: (error: string) => void;
+}) {
+  try {
+    const resp = await fetch(CHAT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      },
+      body: JSON.stringify({ messages, lang }),
+    });
+
+    if (!resp.ok) {
+      const errorData = await resp.json().catch(() => ({}));
+      onError(errorData.error || 'Failed to connect');
+      return;
+    }
+
+    if (!resp.body) {
+      onError('No response body');
+      return;
+    }
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let textBuffer = '';
+    let streamDone = false;
+
+    while (!streamDone) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      textBuffer += decoder.decode(value, { stream: true });
+
+      let newlineIndex: number;
+      while ((newlineIndex = textBuffer.indexOf('\n')) !== -1) {
+        let line = textBuffer.slice(0, newlineIndex);
+        textBuffer = textBuffer.slice(newlineIndex + 1);
+
+        if (line.endsWith('\r')) line = line.slice(0, -1);
+        if (line.startsWith(':') || line.trim() === '') continue;
+        if (!line.startsWith('data: ')) continue;
+
+        const jsonStr = line.slice(6).trim();
+        if (jsonStr === '[DONE]') {
+          streamDone = true;
+          break;
+        }
+
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch {
+          textBuffer = line + '\n' + textBuffer;
+          break;
+        }
+      }
+    }
+
+    // Flush remaining buffer
+    if (textBuffer.trim()) {
+      for (let raw of textBuffer.split('\n')) {
+        if (!raw) continue;
+        if (raw.endsWith('\r')) raw = raw.slice(0, -1);
+        if (raw.startsWith(':') || raw.trim() === '') continue;
+        if (!raw.startsWith('data: ')) continue;
+        const jsonStr = raw.slice(6).trim();
+        if (jsonStr === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch { /* ignore */ }
+      }
+    }
+
+    onDone();
+  } catch (e) {
+    console.error('Stream error:', e);
+    onError(e instanceof Error ? e.message : 'Connection error');
+  }
+}
 
 // Main Chatbot component
 function ChatbotWidget() {
@@ -196,7 +252,6 @@ function ChatbotWidget() {
     if (isOpen) {
       inputRef.current?.focus();
       
-      // Add welcome message if no messages
       if (messages.length === 0) {
         setMessages([{
           id: 'welcome',
@@ -239,32 +294,9 @@ function ChatbotWidget() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  // Get bot response based on intent
-  const getBotResponse = useCallback((userMessage: string): string => {
-    const intent = getIntentFromMessage(userMessage);
-    
-    if (!intent) {
-      return `${t('chatbot.faq.unknown' as TranslationKey)}\n\n${t('chatbot.budgetCta')}`;
-    }
-    
-    const faqKey = `chatbot.faq.${intent}` as TranslationKey;
-    const followUpKey = `chatbot.followUp.${intent}` as TranslationKey;
-    
-    const answer = t(faqKey);
-    const followUp = t(followUpKey);
-    
-    if (answer === faqKey) {
-      return `${t('chatbot.outOfScope')}\n\n${t('chatbot.budgetCta')}`;
-    }
-    
-    return followUp && followUp !== followUpKey 
-      ? `${answer}\n\n${followUp}`
-      : `${answer}\n\n${t('chatbot.budgetCta')}`;
-  }, [t]);
-
-  // Handle send message
-  const handleSend = useCallback(() => {
-    if (!input.trim()) return;
+  // Handle send message with LLM streaming
+  const handleSend = useCallback(async () => {
+    if (!input.trim() || isTyping) return;
     
     const userMessage: Message = {
       id: `user-${Date.now()}`,
@@ -276,53 +308,58 @@ function ChatbotWidget() {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
+
+    let assistantContent = '';
     
-    // Simulate typing delay
-    setTimeout(() => {
-      const response = getBotResponse(userMessage.content);
-      
-      const botMessage: Message = {
-        id: `bot-${Date.now()}`,
-        role: 'assistant',
-        content: response,
-        timestamp: Date.now(),
-      };
-      
-      setMessages(prev => [...prev, botMessage]);
-      setIsTyping(false);
-    }, 800 + Math.random() * 700);
-  }, [input, getBotResponse]);
+    const chatHistory = [...messages, userMessage]
+      .filter(m => m.id !== 'welcome')
+      .map(m => ({ role: m.role, content: m.content }));
+
+    await streamChat({
+      messages: chatHistory,
+      lang,
+      onDelta: (chunk) => {
+        assistantContent += chunk;
+        setMessages(prev => {
+          const last = prev[prev.length - 1];
+          if (last?.role === 'assistant' && last.id.startsWith('bot-stream-')) {
+            return prev.map((m, i) => 
+              i === prev.length - 1 ? { ...m, content: assistantContent } : m
+            );
+          }
+          return [...prev, {
+            id: `bot-stream-${Date.now()}`,
+            role: 'assistant',
+            content: assistantContent,
+            timestamp: Date.now(),
+          }];
+        });
+      },
+      onDone: () => {
+        setIsTyping(false);
+      },
+      onError: (error) => {
+        console.error('Chat error:', error);
+        setMessages(prev => [...prev, {
+          id: `bot-error-${Date.now()}`,
+          role: 'assistant',
+          content: t('chatbot.outOfScope'),
+          timestamp: Date.now(),
+        }]);
+        setIsTyping(false);
+      },
+    });
+  }, [input, messages, lang, isTyping, t]);
 
   // Handle quick chip click
   const handleChipClick = useCallback((chip: string) => {
+    if (isTyping) return;
     setInput(chip);
     setTimeout(() => {
-      const userMessage: Message = {
-        id: `user-${Date.now()}`,
-        role: 'user',
-        content: chip,
-        timestamp: Date.now(),
-      };
-      
-      setMessages(prev => [...prev, userMessage]);
-      setInput('');
-      setIsTyping(true);
-      
-      setTimeout(() => {
-        const response = getBotResponse(chip);
-        
-        const botMessage: Message = {
-          id: `bot-${Date.now()}`,
-          role: 'assistant',
-          content: response,
-          timestamp: Date.now(),
-        };
-        
-        setMessages(prev => [...prev, botMessage]);
-        setIsTyping(false);
-      }, 800 + Math.random() * 700);
-    }, 100);
-  }, [getBotResponse]);
+      const syntheticEvent = { target: { value: chip } };
+      setInput(chip);
+    }, 50);
+  }, [isTyping]);
 
   // Handle clear chat
   const handleClearChat = useCallback(() => {
@@ -409,7 +446,7 @@ function ChatbotWidget() {
                   aria-label={t('chatbot.whatsapp')}
                   title={t('chatbot.whatsapp')}
                 >
-                  <Phone className="w-4 h-4" />
+                  <WhatsAppIcon size={16} />
                 </button>
                 <button
                   onClick={handleClearChat}
@@ -453,7 +490,7 @@ function ChatbotWidget() {
                 onClick={handleWhatsAppClick}
                 className="w-full py-2 px-4 bg-[#25D366] hover:bg-[#22c35e] text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
               >
-                <Phone className="w-4 h-4" />
+                <WhatsAppIcon size={16} />
                 {t('chatbot.whatsapp')}
               </button>
             </div>
@@ -475,10 +512,11 @@ function ChatbotWidget() {
                   placeholder={t('chatbot.placeholder')}
                   className="flex-1 px-4 py-2.5 bg-secondary text-foreground placeholder:text-muted-foreground rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
                   aria-label={t('chatbot.placeholder')}
+                  disabled={isTyping}
                 />
                 <button
                   type="submit"
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || isTyping}
                   className="px-4 py-2.5 bg-primary text-primary-foreground rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition-colors"
                   aria-label={t('chatbot.send')}
                 >

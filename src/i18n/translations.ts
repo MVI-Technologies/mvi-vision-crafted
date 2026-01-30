@@ -7,8 +7,8 @@
  * - Keep translations consistent in tone: professional, direct, premium
  * 
  * CHATBOT FAQ:
- * - Edit 'chatbot.faq' object to update business responses
- * - Each FAQ entry has 'answer' and 'followUp'
+ * - Chatbot now uses LLM with strict scope rules
+ * - Edit system prompt in edge function for behavior changes
  */
 
 export type Language = 'pt-BR' | 'en';
@@ -30,7 +30,7 @@ export const translations = {
     // Hero
     'hero.line1': 'Design',
     'hero.line2': '& Software',
-    'hero.line3': 'makers®',
+    'hero.line3': 'makers',
     'hero.echoText': 'makers',
     'hero.capability1': 'Web Apps',
     'hero.capability2': 'Sites & Landing Pages',
@@ -141,7 +141,7 @@ export const translations = {
     'contact.errorMessage': 'Tente novamente mais tarde.',
 
     // Footer
-    'footer.copyright': '© 2026 MVI Tech®',
+    'footer.copyright': '© 2026 MVI Tech',
     'footer.tagline': 'Design & Software makers',
 
     // Chatbot
@@ -167,24 +167,6 @@ export const translations = {
     'chatbot.chip3': 'Vocês fazem app?',
     'chatbot.chip4': 'Como funciona o processo?',
     'chatbot.chip5': 'Quais tecnologias usam?',
-
-    // Chatbot FAQ answers
-    'chatbot.faq.price': 'Os valores variam conforme a complexidade do projeto. Um site institucional pode partir de R$ 5.000 a R$ 15.000, enquanto plataformas e sistemas mais robustos ficam entre R$ 20.000 e R$ 80.000+. Tudo depende das funcionalidades, integrações e prazos.',
-    'chatbot.faq.timeline': 'Sites institucionais levam de 2 a 4 semanas. Landing pages podem ficar prontas em 1 semana. Sistemas e plataformas mais complexos variam de 1 a 4 meses, dependendo do escopo.',
-    'chatbot.faq.app': 'Sim! Desenvolvemos apps mobile com React Native, garantindo qualidade tanto para iOS quanto Android com uma única base de código. Também criamos PWAs para casos onde um app nativo não é necessário.',
-    'chatbot.faq.process': 'Nosso processo: 1) Briefing e discovery para entender o projeto; 2) Proposta com escopo, prazo e valor; 3) Design e prototipação; 4) Desenvolvimento iterativo com entregas parciais; 5) Testes e ajustes; 6) Lançamento e suporte inicial.',
-    'chatbot.faq.stack': 'Trabalhamos com React, Next.js, TypeScript no frontend. Node.js, Python e bancos como PostgreSQL e MongoDB no backend. Para apps, usamos React Native. Infraestrutura em AWS, Vercel ou conforme a necessidade.',
-    'chatbot.faq.support': 'Oferecemos suporte pós-lançamento incluso por 30 dias. Após isso, podemos fechar pacotes de manutenção mensal ou horas avulsas conforme a demanda.',
-    'chatbot.faq.branding': 'Sim! Criamos identidades visuais completas: logo, paleta de cores, tipografia, guidelines e aplicações. O branding pode ser contratado separadamente ou junto com o desenvolvimento.',
-    'chatbot.faq.ecommerce': 'Desenvolvemos e-commerces personalizados ou integrações com plataformas como Shopify. Incluímos gateway de pagamento, gestão de estoque e integrações logísticas.',
-    'chatbot.faq.unknown': 'Para te dar uma estimativa mais precisa, preciso saber: 1) Qual tipo de projeto você precisa? 2) Qual o objetivo principal?',
-
-    // Chatbot follow-ups
-    'chatbot.followUp.price': 'Posso ajudar a estimar um valor mais preciso. Qual tipo de projeto você tem em mente?',
-    'chatbot.followUp.timeline': 'Quer me contar mais sobre o que precisa? Assim consigo estimar melhor o prazo.',
-    'chatbot.followUp.app': 'Tem alguma ideia do que o app precisa fazer? Me conta mais!',
-    'chatbot.followUp.process': 'Quer agendar uma conversa para entender melhor seu projeto?',
-    'chatbot.followUp.stack': 'Tem preferência por alguma tecnologia específica?',
   },
 
   'en': {
@@ -203,7 +185,7 @@ export const translations = {
     // Hero
     'hero.line1': 'Design',
     'hero.line2': '& Software',
-    'hero.line3': 'makers®',
+    'hero.line3': 'makers',
     'hero.echoText': 'makers',
     'hero.capability1': 'Web Apps',
     'hero.capability2': 'Sites & Landing Pages',
@@ -314,7 +296,7 @@ export const translations = {
     'contact.errorMessage': 'Please try again later.',
 
     // Footer
-    'footer.copyright': '© 2026 MVI Tech®',
+    'footer.copyright': '© 2026 MVI Tech',
     'footer.tagline': 'Design & Software makers',
 
     // Chatbot
@@ -340,24 +322,6 @@ export const translations = {
     'chatbot.chip3': 'Do you build apps?',
     'chatbot.chip4': 'How does your process work?',
     'chatbot.chip5': 'What technologies do you use?',
-
-    // Chatbot FAQ answers
-    'chatbot.faq.price': 'Prices vary based on project complexity. An institutional website can range from $2,000 to $8,000, while more robust platforms and systems range from $10,000 to $50,000+. It all depends on features, integrations, and timelines.',
-    'chatbot.faq.timeline': 'Institutional websites take 2 to 4 weeks. Landing pages can be ready in 1 week. More complex systems and platforms vary from 1 to 4 months, depending on scope.',
-    'chatbot.faq.app': 'Yes! We develop mobile apps with React Native, ensuring quality for both iOS and Android with a single codebase. We also create PWAs for cases where a native app isn\'t necessary.',
-    'chatbot.faq.process': 'Our process: 1) Briefing and discovery to understand the project; 2) Proposal with scope, timeline, and pricing; 3) Design and prototyping; 4) Iterative development with partial deliveries; 5) Testing and adjustments; 6) Launch and initial support.',
-    'chatbot.faq.stack': 'We work with React, Next.js, TypeScript on frontend. Node.js, Python, and databases like PostgreSQL and MongoDB on backend. For apps, we use React Native. Infrastructure on AWS, Vercel, or as needed.',
-    'chatbot.faq.support': 'We offer 30-day post-launch support included. After that, we can arrange monthly maintenance packages or hourly support as needed.',
-    'chatbot.faq.branding': 'Yes! We create complete visual identities: logo, color palette, typography, guidelines, and applications. Branding can be contracted separately or together with development.',
-    'chatbot.faq.ecommerce': 'We develop custom e-commerce or integrations with platforms like Shopify. We include payment gateway, inventory management, and logistics integrations.',
-    'chatbot.faq.unknown': 'To give you a more accurate estimate, I need to know: 1) What type of project do you need? 2) What\'s the main goal?',
-
-    // Chatbot follow-ups
-    'chatbot.followUp.price': 'I can help estimate a more precise value. What type of project do you have in mind?',
-    'chatbot.followUp.timeline': 'Want to tell me more about what you need? I can better estimate the timeline.',
-    'chatbot.followUp.app': 'Have any idea what the app needs to do? Tell me more!',
-    'chatbot.followUp.process': 'Want to schedule a call to better understand your project?',
-    'chatbot.followUp.stack': 'Do you have a preference for any specific technology?',
   },
 } as const;
 
