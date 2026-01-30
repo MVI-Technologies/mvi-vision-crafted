@@ -43,7 +43,7 @@ const Navbar = memo(function Navbar() {
             {/* Logo */}
             <a href="#home" className="group flex items-center gap-2">
               <span className="font-bold text-xl tracking-tight">MVI</span>
-              <span className="mono-sm text-muted-foreground group-hover:text-foreground transition-colors">Tech®</span>
+              <span className="mono-sm text-muted-foreground group-hover:text-foreground transition-colors">Tech</span>
             </a>
 
             {/* Desktop Navigation */}
