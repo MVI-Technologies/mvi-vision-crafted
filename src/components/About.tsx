@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
+import { useI18n } from '@/i18n/LanguageProvider';
 
-const bulletPoints = [
-  { index: '001', text: 'Pensamos como negócio.' },
-  { index: '002', text: 'Validamos rápido, escalamos com segurança.' },
-  { index: '003', text: 'Design que converte, código que aguenta.' },
+const bulletKeys = [
+  { index: '001', key: 'about.bullet1' as const },
+  { index: '002', key: 'about.bullet2' as const },
+  { index: '003', key: 'about.bullet3' as const },
 ];
 
-const About = () => {
+const About = memo(function About() {
+  const { t } = useI18n();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
@@ -22,8 +24,8 @@ const About = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16"
         >
-          <span className="mono-label text-muted-foreground mb-4 block">(Sobre)</span>
-          <h2 className="display-lg">Sobre</h2>
+          <span className="mono-label text-muted-foreground mb-4 block">{t('about.label')}</span>
+          <h2 className="display-lg">{t('about.title')}</h2>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
@@ -34,7 +36,7 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <p className="body-lg text-muted-foreground leading-relaxed">
-              A MVI Tech cria produtos digitais do zero ao lançamento — com design de alto padrão e desenvolvimento sólido. Sem complicação. Sem teatro. Só entrega.
+              {t('about.description')}
             </p>
           </motion.div>
 
@@ -45,18 +47,18 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="border-l border-border pl-6">
-              <h3 className="mono-sm text-foreground mb-8">Parceiro estratégico</h3>
+              <h3 className="mono-sm text-foreground mb-8">{t('about.partnerTitle')}</h3>
               <div className="space-y-6">
-                {bulletPoints.map((point, index) => (
+                {bulletKeys.map((bullet, index) => (
                   <motion.div
-                    key={point.index}
+                    key={bullet.index}
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                     className="flex items-start gap-4"
                   >
-                    <span className="index-label shrink-0">({point.index})</span>
-                    <p className="body-md text-foreground">{point.text}</p>
+                    <span className="index-label shrink-0">({bullet.index})</span>
+                    <p className="body-md text-foreground">{t(bullet.key)}</p>
                   </motion.div>
                 ))}
               </div>
@@ -74,6 +76,6 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
 
 export default About;

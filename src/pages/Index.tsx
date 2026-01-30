@@ -5,6 +5,7 @@ import Services from '@/components/Services';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import LazyChatbot from '@/components/LazyChatbot';
 
 const Index = () => {
   return (
@@ -21,6 +22,9 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
+      
+      {/* Lazy-loaded chatbot */}
+      <LazyChatbot />
     </div>
   );
 };
