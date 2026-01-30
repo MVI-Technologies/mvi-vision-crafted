@@ -1,0 +1,4 @@
+project_id = "exhgvjrpmrunconcqxld"
+
+[functions.business-chat]
+verify_jwt = false
