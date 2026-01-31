@@ -10,9 +10,9 @@ const Navbar = memo(function Navbar() {
 
   const navLinks = [
     { labelKey: 'nav.home' as const, href: '#home' },
-    { labelKey: 'nav.projects' as const, href: '#projetos' },
-    { labelKey: 'nav.services' as const, href: '#servicos' },
     { labelKey: 'nav.about' as const, href: '#sobre' },
+    { labelKey: 'nav.services' as const, href: '#servicos' },
+    { labelKey: 'nav.projects' as const, href: '#projetos' },
     { labelKey: 'nav.contact' as const, href: '#contato' },
   ];
 
