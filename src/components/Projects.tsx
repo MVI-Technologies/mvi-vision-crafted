@@ -2,7 +2,7 @@ import { useState, useRef, memo, useCallback } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { ArrowUpRight, X, ExternalLink, Copy, Check } from 'lucide-react';
 import { useI18n } from '@/i18n/LanguageProvider';
-import { projects, Project } from '@/data/projects';
+import { projects, Project, getProjectTranslation } from '@/data/projects';
 import { copyToClipboard } from '@/lib/clipboard';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,8 @@ const ProjectRow = memo(function ProjectRow({
   onOpen: () => void;
   index: number;
 }) {
+  const { lang } = useI18n();
+  const translated = getProjectTranslation(project, lang);
   const rowRef = useRef(null);
   const isInView = useInView(rowRef, { once: true, margin: '-50px' });
   const [isHovered, setIsHovered] = useState(false);
@@ -35,11 +37,13 @@ const ProjectRow = memo(function ProjectRow({
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 flex items-baseline gap-4 flex-wrap">
           <h3 className="text-xl md:text-2xl font-semibold group-hover:translate-x-2 transition-transform duration-300">
-            {project.title}
+            {translated.title}
           </h3>
-          <span className="mono-sm text-muted-foreground">/ {project.category}</span>
+          <span className="mono-sm text-muted-foreground">/ {translated.category}</span>
           {project.comingSoon && (
-            <Badge variant="secondary" className="text-xs">Em Breve</Badge>
+            <Badge variant="secondary" className="text-xs">
+              {lang === 'pt-BR' ? 'Em Breve' : 'Coming Soon'}
+            </Badge>
           )}
         </div>
 
@@ -49,7 +53,7 @@ const ProjectRow = memo(function ProjectRow({
           className="flex items-center gap-2"
         >
           <span className="text-sm text-muted-foreground hidden sm:block line-clamp-1 max-w-[200px]">
-            {project.description.slice(0, 50)}...
+            {translated.description.slice(0, 50)}...
           </span>
           <ArrowUpRight className="w-5 h-5 shrink-0" />
         </motion.div>
@@ -65,7 +69,8 @@ const ProjectModal = memo(function ProjectModal({
   project: Project;
   onClose: () => void;
 }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const translated = getProjectTranslation(project, lang);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 
@@ -76,14 +81,18 @@ const ProjectModal = memo(function ProjectModal({
     if (success) {
       setCopied(true);
       toast({
-        title: 'URL copiada!',
-        description: 'Link do projeto copiado para a área de transferência.',
+        title: lang === 'pt-BR' ? 'URL copiada!' : 'URL copied!',
+        description: lang === 'pt-BR' 
+          ? 'Link do projeto copiado para a área de transferência.' 
+          : 'Project link copied to clipboard.',
       });
       setTimeout(() => setCopied(false), 2000);
     } else {
       toast({
-        title: 'Erro ao copiar',
-        description: 'Não foi possível copiar o link.',
+        title: lang === 'pt-BR' ? 'Erro ao copiar' : 'Copy error',
+        description: lang === 'pt-BR' 
+          ? 'Não foi possível copiar o link.' 
+          : 'Could not copy the link.',
         variant: 'destructive',
       });
     }
@@ -121,15 +130,17 @@ const ProjectModal = memo(function ProjectModal({
         >
           {/* Header */}
           <div className="mb-16">
-            <span className="mono-sm text-muted-foreground mb-4 block">/ {project.category}</span>
-            <h2 className="display-lg mb-4">{project.title}</h2>
-            <p className="body-lg text-muted-foreground">{project.description}</p>
+            <span className="mono-sm text-muted-foreground mb-4 block">/ {translated.category}</span>
+            <h2 className="display-lg mb-4">{translated.title}</h2>
+            <p className="body-lg text-muted-foreground">{translated.description}</p>
           </div>
 
           {/* URL Section */}
           {project.url && !project.comingSoon && (
             <div className="mb-16 p-6 bg-secondary/30 border border-border rounded-lg">
-              <h4 className="mono-sm text-foreground mb-4">Link do Projeto</h4>
+              <h4 className="mono-sm text-foreground mb-4">
+                {lang === 'pt-BR' ? 'Link do Projeto' : 'Project Link'}
+              </h4>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <a
                   href={project.url}
@@ -147,7 +158,9 @@ const ProjectModal = memo(function ProjectModal({
                     className="gap-2"
                   >
                     {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
-                    {copied ? 'Copiado!' : 'Copiar URL'}
+                    {copied 
+                      ? (lang === 'pt-BR' ? 'Copiado!' : 'Copied!') 
+                      : (lang === 'pt-BR' ? 'Copiar URL' : 'Copy URL')}
                   </Button>
                   <Button
                     size="sm"
@@ -155,7 +168,7 @@ const ProjectModal = memo(function ProjectModal({
                     className="gap-2"
                   >
                     <ExternalLink className="w-4 h-4" />
-                    Abrir projeto
+                    {lang === 'pt-BR' ? 'Abrir projeto' : 'Open project'}
                   </Button>
                 </div>
               </div>
@@ -165,17 +178,25 @@ const ProjectModal = memo(function ProjectModal({
           {/* Coming Soon Notice */}
           {project.comingSoon && (
             <div className="mb-16 p-6 bg-secondary/30 border border-border rounded-lg">
-              <Badge variant="secondary" className="text-sm">Em Breve</Badge>
-              <p className="text-muted-foreground mt-2">Este projeto ainda está em desenvolvimento.</p>
+              <Badge variant="secondary" className="text-sm">
+                {lang === 'pt-BR' ? 'Em Breve' : 'Coming Soon'}
+              </Badge>
+              <p className="text-muted-foreground mt-2">
+                {lang === 'pt-BR' 
+                  ? 'Este projeto ainda está em desenvolvimento.' 
+                  : 'This project is still in development.'}
+              </p>
             </div>
           )}
 
           {/* Case details */}
-          {project.highlights && project.highlights.length > 0 && (
+          {translated.highlights && translated.highlights.length > 0 && (
             <div className="grid md:grid-cols-3 gap-12 mb-16">
-              {project.highlights.map((highlight, index) => (
+              {translated.highlights.map((highlight, index) => (
                 <div key={index}>
-                  <h4 className="mono-sm text-foreground mb-4">Destaque {index + 1}</h4>
+                  <h4 className="mono-sm text-foreground mb-4">
+                    {lang === 'pt-BR' ? `Destaque ${index + 1}` : `Highlight ${index + 1}`}
+                  </h4>
                   <p className="body-md text-muted-foreground">{highlight}</p>
                 </div>
               ))}
@@ -205,7 +226,7 @@ const ProjectModal = memo(function ProjectModal({
               <div className="aspect-video bg-gradient-to-br from-secondary to-accent rounded-lg overflow-hidden md:col-span-2">
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt={translated.title}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -221,7 +242,7 @@ const ProjectModal = memo(function ProjectModal({
                 className="gap-2"
               >
                 <ExternalLink className="w-5 h-5" />
-                Abrir projeto
+                {lang === 'pt-BR' ? 'Abrir projeto' : 'Open project'}
               </Button>
             </div>
           )}
