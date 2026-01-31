@@ -50,7 +50,7 @@ const Hero = memo(function Hero() {
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="max-w-6xl">
           {/* Main headline */}
           <div className="relative mb-12">
-            <motion.h1 variants={itemVariants} className="display-xl">
+            <motion.h1 variants={itemVariants} className="display-xl mb-2 md:mb-6">
               {t('hero.line1')}
             </motion.h1>
             <motion.h1 variants={itemVariants} className="display-xl">

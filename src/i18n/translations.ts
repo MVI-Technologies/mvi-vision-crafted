@@ -52,7 +52,7 @@ export const translations = {
 
     // Services
     'services.label': '(Serviços)',
-    'services.title': 'Serviços.',
+    'services.title': 'Serviços',
     'services.service1.title': 'UI/UX & Interface',
     'services.service1.description': 'Interfaces que parecem simples — porque foram bem pensadas.',
     'services.service1.approaches': 'Design visual, Hierarquia, Componentes, Acessibilidade, Conversão',

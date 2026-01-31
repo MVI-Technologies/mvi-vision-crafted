@@ -132,7 +132,7 @@ const Contact = memo(function Contact() {
             />
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-              <span className="mono-label text-muted-foreground order-2 sm:order-1">
+              <span className="mono-label text-white order-2 sm:order-1">
                 {t('contact.responseTime')}
               </span>
               <button type="submit" className="btn-primary order-1 sm:order-2 w-full sm:w-auto group">
