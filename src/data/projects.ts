@@ -53,7 +53,7 @@ export const projects: Project[] = [
       ],
     },
   },
-  image: 'artea-joias.png',
+  image: '/artea-joias.png',
   url: 'https://www.grupoaadecomprascoletivas.site/login', // ajuste se necessário
   tags: ['E-commerce', 'B2C', 'Collective Buying', 'Reports'],
 },
@@ -85,7 +85,7 @@ export const projects: Project[] = [
       ],
     },
   },
-  image: 'dyque-daya-registros.png',
+  image: '/dyque-daya-registros.png',
   url: 'https://imberio-motor-hub.vercel.app/login',
   tags: ['Management System', 'Budgets', 'Technical Reports', 'Operations'],
 },
