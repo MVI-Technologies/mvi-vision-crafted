@@ -25,28 +25,95 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  // Projects imported from old portfolio
   {
+      id: 'artea-joias',
+  translations: {
+    'pt-BR': {
+      title: 'Artea Joias',
+      description:
+        'Negócios B2C de semijoias que operam com alto volume de pedidos enfrentam desafios como controle de estoque por grupo, organização de pedidos, geração de romaneios e consolidação de dados gerenciais.\n\nO sistema Artea Joias foi desenvolvido para operar no modelo de compras coletivas por grupo, centralizando toda a operação de vendas em uma única plataforma. A solução permite o gerenciamento completo de pedidos, controle de romaneios, acompanhamento de vendas e geração de relatórios gerenciais, garantindo organização, escalabilidade e eficiência operacional.',
+      category: 'E-commerce B2C / Compras Coletivas',
+      highlights: [
+        'Modelo B2C de compras coletivas por grupo',
+        'Gestão completa de vendas e pedidos',
+        'Geração e controle de romaneios',
+        'Relatórios gerenciais para tomada de decisão',
+      ],
+    },
+    en: {
+      title: 'Artea Joias',
+      description:
+        'B2C semi-jewelry businesses operating at scale often face challenges in group-based order management, stock control, shipment documentation, and consolidated reporting.\n\nThe Artea Joias system was designed to operate under a collective purchasing model, centralizing the entire sales operation into a single platform. It enables full management of orders, shipment records, sales tracking, and managerial reports, ensuring operational efficiency and scalability.',
+      category: 'B2C E-commerce / Collective Purchasing',
+      highlights: [
+        'B2C collective purchasing by groups',
+        'End-to-end sales and order management',
+        'Shipment and dispatch record control',
+        'Managerial reports for decision-making',
+      ],
+    },
+  },
+  image: '/public/artea-joias.png',
+  url: 'https://www.grupoaadecomprascoletivas.site/login', // ajuste se necessário
+  tags: ['E-commerce', 'B2C', 'Collective Buying', 'Reports'],
+},
+{
+  id: 'dyque-daya-registros',
+  translations: {
+    'pt-BR': {
+      title: 'Dyque & Daya Registros',
+      description:
+        'Oficinas de motores elétricos que dependem de processos manuais enfrentam dificuldades no controle de orçamentos, histórico de clientes, gestão de peças e emissão de laudos técnicos.\n\nO sistema DYQUE & DAYA Registros foi desenvolvido para profissionalizar essa operação, oferecendo uma plataforma completa para gestão de clientes, peças, orçamentos e laudos técnicos. A solução centraliza informações, reduz erros operacionais e aumenta a eficiência no atendimento e na tomada de decisões.',
+      category: 'Sistema de Gestão / Oficinas Técnicas',
+      highlights: [
+        'Gestão completa de orçamentos',
+        'Cadastro e histórico de clientes',
+        'Controle de peças e insumos',
+        'Emissão de laudos técnicos profissionais',
+      ],
+    },
+    en: {
+      title: 'Dyque & Daya Records',
+      description:
+        'Electric motor workshops relying on manual processes often struggle with budget control, customer history, parts management, and technical report generation.\n\nDYQUE & DAYA Records was built to professionalize these operations through a complete management system for clients, parts, budgets, and technical reports. The platform centralizes data, reduces operational errors, and improves efficiency and decision-making.',
+      category: 'Management System / Technical Workshops',
+      highlights: [
+        'Complete budget management',
+        'Customer registration and history',
+        'Parts and inventory control',
+        'Professional technical report generation',
+      ],
+    },
+  },
+  image: '/public/dyque-daya-registros.png',
+  url: 'https://imberio-motor-hub.vercel.app/login',
+  tags: ['Management System', 'Budgets', 'Technical Reports', 'Operations'],
+},
+{
     id: 'mediconnect',
     translations: {
       'pt-BR': {
         title: 'MediConnect',
-        description: 'Plataforma de telemedicina conectando pacientes e médicos com consultas online, assinatura digital e IA para prontuários.',
+        description:
+          'O acesso à saúde ainda enfrenta desafios como longas filas, dificuldade de agendamento, deslocamentos desnecessários e processos burocráticos que impactam tanto pacientes quanto profissionais da área médica. Além disso, a gestão manual de documentos e prontuários torna o atendimento mais lento e sujeito a falhas.\n\nA MediConnect foi desenvolvida para transformar esse cenário, conectando médicos e pacientes por meio de consultas online seguras, eliminando barreiras geográficas e reduzindo o tempo entre o atendimento e o cuidado efetivo. A plataforma integra assinatura digital com validade jurídica e inteligência artificial aplicada à organização e análise de prontuários médicos, trazendo mais eficiência, segurança e qualidade ao atendimento.',
         category: 'Plataforma de Saúde',
         highlights: [
-          'Consultas online em tempo real',
-          'Prontuário eletrônico com IA',
-          'Assinatura digital integrada'
+          'Consultas online seguras e em tempo real',
+          'Prontuário eletrônico inteligente com IA',
+          'Assinatura digital com validade legal',
+          'Otimização do fluxo clínico e redução de burocracia',
         ],
       },
-      'en': {
+      en: {
         title: 'MediConnect',
-        description: 'Telemedicine platform connecting patients and doctors with online consultations, digital signatures, and AI-powered medical records.',
+        description:
+          'Access to healthcare still faces challenges such as long waiting times, difficult scheduling, unnecessary travel, and bureaucratic processes that affect both patients and medical professionals. Manual document handling and fragmented medical records further slow down care delivery.\n\nMediConnect was designed to redefine this experience by connecting doctors and patients through secure online consultations, removing geographical barriers and reducing the time between diagnosis and care. The platform integrates legally compliant digital signatures and AI-powered medical record management, delivering greater efficiency, security, and quality in healthcare services.',
         category: 'Health Platform',
         highlights: [
-          'Real-time online consultations',
+          'Secure real-time online consultations',
           'AI-powered electronic medical records',
-          'Integrated digital signature'
+          'Legally compliant digital signatures',
+          'Optimized clinical workflows',
         ],
       },
     },
@@ -54,27 +121,32 @@ export const projects: Project[] = [
     image: 'https://portfolio-mvi.vercel.app/projects/medi-connect.png',
     tags: ['Telemedicine', 'AI', 'SaaS'],
   },
+
   {
     id: 'motor-metrics',
     translations: {
       'pt-BR': {
         title: 'Motor Metrics',
-        description: 'Plataforma de análise de métricas com dashboard moderno, visualizações em tempo real e relatórios detalhados.',
+        description:
+          'Empresas que lidam com grandes volumes de dados frequentemente enfrentam dificuldades para transformar informações brutas em decisões estratégicas. Relatórios descentralizados e métricas pouco claras comprometem a análise de performance e a tomada de decisão.\n\nO Motor Metrics resolve esse problema ao centralizar dados em dashboards modernos, com visualizações em tempo real e relatórios personalizados. A plataforma permite acompanhar indicadores-chave, identificar gargalos e apoiar decisões baseadas em dados confiáveis.',
         category: 'Dashboard Analytics',
         highlights: [
-          'Visualizações em tempo real',
-          'Relatórios personalizados',
-          'Integração com múltiplas fontes'
+          'Dashboards interativos em tempo real',
+          'Relatórios personalizados para tomada de decisão',
+          'Integração com múltiplas fontes de dados',
+          'Visualização clara de KPIs estratégicos',
         ],
       },
-      'en': {
+      en: {
         title: 'Motor Metrics',
-        description: 'Metrics analysis platform with modern dashboard, real-time visualizations, and detailed reports.',
+        description:
+          'Companies dealing with large data volumes often struggle to turn raw information into strategic decisions. Disconnected reports and unclear metrics hinder performance analysis.\n\nMotor Metrics solves this by centralizing data into modern dashboards with real-time visualizations and customized reports, enabling KPI tracking, bottleneck identification, and data-driven decision-making.',
         category: 'Dashboard Analytics',
         highlights: [
-          'Real-time visualizations',
-          'Customized reports',
-          'Multi-source integration'
+          'Interactive real-time dashboards',
+          'Custom reports for decision-making',
+          'Multi-source data integration',
+          'Clear KPI visualization',
         ],
       },
     },
@@ -82,27 +154,32 @@ export const projects: Project[] = [
     image: 'https://portfolio-mvi.vercel.app/projects/motor-metrics.png',
     tags: ['Dashboard', 'Analytics', 'BI'],
   },
+
   {
     id: 'frete-rapido',
     translations: {
       'pt-BR': {
         title: 'Frete Rápido',
-        description: 'Landing page profissional para empresa de logística com foco em conversão e experiência do usuário.',
+        description:
+          'Empresas de logística muitas vezes perdem oportunidades por sites lentos, pouco claros e sem foco em conversão. A dificuldade em comunicar valor afasta potenciais clientes.\n\nA landing page do Frete Rápido foi desenvolvida para resolver esse problema, priorizando performance, clareza da proposta de valor e experiência do usuário. O resultado é uma presença digital eficiente, capaz de transformar visitantes em leads qualificados.',
         category: 'Logística',
         highlights: [
-          'Design focado em conversão',
-          'Experiência responsiva',
-          'Performance otimizada'
+          'Estrutura focada em conversão',
+          'Experiência totalmente responsiva',
+          'Performance e carregamento otimizados',
+          'Mensagem clara e objetiva do serviço',
         ],
       },
-      'en': {
+      en: {
         title: 'Frete Rápido',
-        description: 'Professional landing page for logistics company focused on conversion and user experience.',
+        description:
+          'Logistics companies often lose opportunities due to slow websites, unclear messaging, and poor conversion focus.\n\nFrete Rápido’s landing page addresses this by emphasizing performance, value proposition clarity, and user experience, turning visitors into qualified leads.',
         category: 'Logistics',
         highlights: [
-          'Conversion-focused design',
-          'Responsive experience',
-          'Optimized performance'
+          'Conversion-focused structure',
+          'Fully responsive experience',
+          'Optimized performance and loading speed',
+          'Clear service communication',
         ],
       },
     },
@@ -110,27 +187,32 @@ export const projects: Project[] = [
     image: 'https://portfolio-mvi.vercel.app/projects/frete.png',
     tags: ['Landing Page', 'Logistics', 'Conversion'],
   },
+
   {
     id: 'farmacia-vital-care',
     translations: {
       'pt-BR': {
         title: 'Farmácia Vital Care',
-        description: 'Landing page institucional para farmácia com design moderno, responsivo e otimizado para conversão.',
+        description:
+          'Farmácias que não possuem presença digital estruturada enfrentam dificuldades para se destacar e atender clientes de forma ágil.\n\nA Farmácia Vital Care ganhou uma landing page institucional moderna, focada em SEO local, integração com WhatsApp e conversão, facilitando o contato com clientes e fortalecendo sua presença online.',
         category: 'Saúde & Varejo',
         highlights: [
-          'Design moderno e clean',
-          'Integração WhatsApp',
-          'SEO otimizado'
+          'Design moderno e profissional',
+          'Integração direta com WhatsApp',
+          'SEO otimizado para buscas locais',
+          'Experiência mobile-first',
         ],
       },
-      'en': {
+      en: {
         title: 'Vital Care Pharmacy',
-        description: 'Institutional landing page for pharmacy with modern, responsive design optimized for conversion.',
+        description:
+          'Pharmacies without a structured digital presence struggle to stand out and efficiently serve customers.\n\nThis institutional landing page strengthens online visibility through modern design, local SEO, WhatsApp integration, and conversion-focused structure.',
         category: 'Health & Retail',
         highlights: [
-          'Modern and clean design',
-          'WhatsApp integration',
-          'Optimized SEO'
+          'Modern and professional design',
+          'Direct WhatsApp integration',
+          'SEO optimized for local searches',
+          'Mobile-first experience',
         ],
       },
     },
@@ -138,27 +220,32 @@ export const projects: Project[] = [
     image: 'https://portfolio-mvi.vercel.app/projects/farmacia,png.png',
     tags: ['Landing Page', 'Health', 'Retail'],
   },
+
   {
     id: 'style-barba',
     translations: {
       'pt-BR': {
         title: 'Style Barba',
-        description: 'Landing page moderna para barbearia premium com design elegante, tema escuro e agendamento integrado.',
+        description:
+          'Barbearias premium precisam transmitir identidade, sofisticação e praticidade desde o primeiro contato digital.\n\nA Style Barba recebeu uma landing page com tema escuro, tipografia elegante e sistema de agendamento integrado, oferecendo uma experiência moderna e alinhada ao público premium.',
         category: 'Serviços',
         highlights: [
-          'Design premium dark theme',
-          'Sistema de agendamento',
-          'Experiência mobile-first'
+          'Design premium com dark theme',
+          'Sistema de agendamento integrado',
+          'Experiência otimizada para mobile',
+          'Identidade visual alinhada ao público premium',
         ],
       },
-      'en': {
+      en: {
         title: 'Style Barba',
-        description: 'Modern landing page for premium barbershop with elegant design, dark theme, and integrated booking.',
+        description:
+          'Premium barbershops must convey identity, sophistication, and convenience from the first digital touchpoint.\n\nStyle Barba’s landing page delivers a dark theme, elegant typography, and integrated booking for a modern, premium experience.',
         category: 'Services',
         highlights: [
           'Premium dark theme design',
-          'Booking system',
-          'Mobile-first experience'
+          'Integrated booking system',
+          'Optimized mobile experience',
+          'Strong brand-oriented visual identity',
         ],
       },
     },
@@ -166,27 +253,32 @@ export const projects: Project[] = [
     image: 'https://portfolio-mvi.vercel.app/projects/barbearia.png',
     tags: ['Landing Page', 'Services', 'Booking'],
   },
+
   {
     id: 'ecommerce-ling',
     translations: {
       'pt-BR': {
         title: 'E-commerce Ling',
-        description: 'Plataforma de e-commerce moderna com catálogo de produtos, carrinho de compras e checkout integrado.',
+        description:
+          'Plataformas de e-commerce pouco intuitivas impactam diretamente a conversão e a experiência do usuário.\n\nO E-commerce Ling foi desenvolvido para oferecer uma jornada de compra fluida, com catálogo dinâmico, carrinho inteligente e checkout otimizado, preparado para escalar conforme o crescimento do negócio.',
         category: 'E-Commerce',
         highlights: [
-          'Catálogo dinâmico',
-          'Carrinho de compras',
-          'Checkout integrado'
+          'Catálogo de produtos dinâmico',
+          'Carrinho de compras intuitivo',
+          'Checkout integrado e otimizado',
+          'Arquitetura preparada para escala',
         ],
       },
-      'en': {
+      en: {
         title: 'E-commerce Ling',
-        description: 'Modern e-commerce platform with product catalog, shopping cart, and integrated checkout.',
+        description:
+          'Poorly designed e-commerce platforms directly impact conversion and user experience.\n\nE-commerce Ling delivers a seamless shopping journey with a dynamic catalog, intuitive cart, and optimized checkout, built for scalability.',
         category: 'E-Commerce',
         highlights: [
-          'Dynamic catalog',
-          'Shopping cart',
-          'Integrated checkout'
+          'Dynamic product catalog',
+          'Intuitive shopping cart',
+          'Optimized integrated checkout',
+          'Scalable architecture',
         ],
       },
     },
@@ -195,62 +287,8 @@ export const projects: Project[] = [
     tags: ['E-commerce', 'Catalog', 'Checkout'],
     comingSoon: true,
   },
-  // New projects added
-  {
-    id: 'grupo-aa-compras-coletivas',
-    translations: {
-      'pt-BR': {
-        title: 'Compras Coletivas de Semijoias (Grupo AA / Artea Joias)',
-        description: 'Plataforma de acesso com autenticação para compras coletivas de semijoias, centralizando pedidos e operação de vendas em um fluxo digital simples e organizado.',
-        category: 'Sistema / E-commerce B2B',
-        highlights: [
-          'Login e acesso ao sistema',
-          'Fluxo de pedidos e acompanhamento',
-          'Experiência responsiva'
-        ],
-      },
-      'en': {
-        title: 'Semi-Jewelry Collective Purchasing (Grupo AA / Artea Joias)',
-        description: 'Access platform with authentication for collective semi-jewelry purchases, centralizing orders and sales operations in a simple and organized digital flow.',
-        category: 'System / B2B E-commerce',
-        highlights: [
-          'Login and system access',
-          'Order flow and tracking',
-          'Responsive experience'
-        ],
-      },
-    },
-    url: 'https://www.grupoaadecomprascoletivas.site/login',
-    tags: ['System', 'B2B E-commerce', 'Authentication'],
-  },
-  {
-    id: 'motor-hub',
-    translations: {
-      'pt-BR': {
-        title: 'Motor Hub (DYQUE & DAYA)',
-        description: 'Sistema com autenticação voltado à operação e gestão do fluxo de trabalho, com foco em organização e agilidade para rotina interna.',
-        category: 'Sistema / Operações',
-        highlights: [
-          'Login e áreas restritas',
-          'Experiência direta e rápida',
-          'Interface clean e responsiva'
-        ],
-      },
-      'en': {
-        title: 'Motor Hub (DYQUE & DAYA)',
-        description: 'Authentication-based system for operations and workflow management, focused on organization and agility for internal routines.',
-        category: 'System / Operations',
-        highlights: [
-          'Login and restricted areas',
-          'Direct and fast experience',
-          'Clean and responsive interface'
-        ],
-      },
-    },
-    url: 'https://imberio-motor-hub.vercel.app/login',
-    tags: ['System', 'Operations', 'Authentication'],
-  },
 ];
+
 
 // Helper function to get translated project data
 export function getProjectTranslation(project: Project, language: Language): ProjectTranslation & { url: string; image?: string; tags: string[]; comingSoon?: boolean } {

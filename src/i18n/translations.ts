@@ -78,7 +78,7 @@ export const translations = {
     'projects.problem': 'Problema',
     'projects.solution': 'Solução',
     'projects.result': 'Resultado',
-    'projects.stack': 'Stack',
+    'projects.stack': 'Tags',
     'projects.visual': 'Visual',
     
     // Project details

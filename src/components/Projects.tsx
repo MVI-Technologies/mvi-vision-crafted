@@ -222,12 +222,12 @@ const ProjectModal = memo(function ProjectModal({
 
           {/* Image */}
           {project.image && (
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex gap-6" style={{ maxWidth: '80%', justifyContent: 'center', alignItems: 'center', justifySelf: 'center', justifyItems: 'center' }}>
               <div className="aspect-video bg-gradient-to-br from-secondary to-accent rounded-lg overflow-hidden md:col-span-2">
                 <img
                   src={project.image}
                   alt={translated.title}
-                  className="w-full h-full object-cover"
+                  className="w-[100%] h-[100%] object-cover"
                 />
               </div>
             </div>
