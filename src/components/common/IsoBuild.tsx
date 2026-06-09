@@ -3,6 +3,7 @@ import { useTheme } from '@/theme/ThemeProvider';
 
 interface IsoBuildProps {
   className?: string;
+  style?: React.CSSProperties;
   /** Cubes per grid side. */
   grid?: number;
   /** Compact mode: tighter cubes & faster intro (good for mobile). */
@@ -29,7 +30,12 @@ const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(ma
  * blended with a diagonal sweep — evoking projects being assembled block by
  * block. Pure Canvas 2D. Honors reduced-motion and theme tokens.
  */
-const IsoBuild = memo(function IsoBuild({ className, grid = 8, compact = false }: IsoBuildProps) {
+const IsoBuild = memo(function IsoBuild({
+  className,
+  style,
+  grid = 8,
+  compact = false,
+}: IsoBuildProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
 
@@ -48,18 +54,21 @@ const IsoBuild = memo(function IsoBuild({ className, grid = 8, compact = false }
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
     let height = 0;
+    let raf = 0;
+    let firstFrameRaf = 0;
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
+      // ✅ Fallback para clientWidth do pai caso o canvas ainda não tenha
+      // dimensões calculadas (pai com opacity:0 no momento do mount).
+      const w = rect.width  || canvas.parentElement?.clientWidth  || 600;
+      const h = rect.height || canvas.parentElement?.clientHeight || 600;
+      width  = w;
+      height = h;
+      canvas.width  = Math.max(1, Math.floor(w * dpr));
+      canvas.height = Math.max(1, Math.floor(h * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
 
     // Color helpers — blend brand-1 → brand-2 by peak factor.
     const mix = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -157,8 +166,10 @@ const IsoBuild = memo(function IsoBuild({ className, grid = 8, compact = false }
     const center = (grid - 1) / 2;
 
     const introDuration = compact ? 1.2 : 1.8;
-    const start = performance.now();
-    let raf = 0;
+    // start é definido dentro do firstFrameRaf para que t=0 no primeiro frame
+    // real de renderização — evita que a intro "pule" quando o canvas demora
+    // para receber dimensões (ex: pai com opacity:0 no mount).
+    let start = 0;
 
     const render = (now: number) => {
       const t = prefersReducedMotion ? introDuration : (now - start) / 1000;
@@ -205,15 +216,27 @@ const IsoBuild = memo(function IsoBuild({ className, grid = 8, compact = false }
       if (!prefersReducedMotion) raf = requestAnimationFrame(render);
     };
 
-    raf = requestAnimationFrame(render);
+    // ✅ Aguarda o próximo frame para garantir que o layout foi calculado
+    // antes de ler as dimensões do canvas — resolve o caso em que o pai
+    // começa com opacity:0 (Framer Motion) e getBoundingClientRect() retorna 0.
+    firstFrameRaf = requestAnimationFrame(() => {
+      resize();
+      // start capturado aqui: garante t=0 no primeiro render real
+      start = performance.now();
+      raf = requestAnimationFrame(render);
+    });
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
 
     return () => {
+      cancelAnimationFrame(firstFrameRaf);
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
   }, [theme, grid, compact]);
 
-  return <canvas ref={canvasRef} className={className} aria-hidden="true" />;
+  return <canvas ref={canvasRef} className={className} style={style} aria-hidden="true" />;
 });
 
 export default IsoBuild;
