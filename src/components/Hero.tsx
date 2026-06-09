@@ -82,7 +82,7 @@ const Hero = memo(function Hero() {
       <AuroraBackground />
       <FloatingParticles />
 
-      {/* Isometric "construction" animation — projects assembled block by block */}
+      {/* Isometric "construction" animation — desktop: right side overlay */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -98,7 +98,24 @@ const Hero = memo(function Hero() {
         <IsoBuild className="h-full w-full" />
       </motion.div>
 
-      <div className="section-container section-spacing pt-32 md:pt-40 relative z-10">
+      <div className="section-container section-spacing pt-28 md:pt-40 relative z-10">
+        {/* Mobile/tablet: isometric build above the headline */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: EASE_OUT_EXPO }}
+          className="pointer-events-none mb-8 h-44 w-full sm:h-56 md:h-64 lg:hidden"
+          style={{
+            WebkitMaskImage:
+              'radial-gradient(ellipse 70% 80% at 50% 50%, #000 40%, transparent 85%)',
+            maskImage: 'radial-gradient(ellipse 70% 80% at 50% 50%, #000 40%, transparent 85%)',
+          }}
+          aria-hidden="true"
+        >
+          <IsoBuild className="h-full w-full" grid={6} compact />
+        </motion.div>
+
+
         <motion.div variants={container} initial="hidden" animate="visible" className="max-w-6xl">
           {/* Headline */}
           <div className="relative mb-8 md:mb-12" style={{ perspective: 1000 }}>
