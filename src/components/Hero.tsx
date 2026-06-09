@@ -87,7 +87,7 @@ const Hero = memo(function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, ease: EASE_OUT_EXPO }}
-        className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-[52%] lg:block"
+        className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-[52%] md:block"
         style={{
           WebkitMaskImage:
             'radial-gradient(ellipse 75% 75% at 62% 42%, #000 35%, transparent 78%)',
@@ -104,7 +104,7 @@ const Hero = memo(function Hero() {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: EASE_OUT_EXPO }}
-          className="pointer-events-none mb-8 h-44 w-full sm:h-56 md:h-64 lg:hidden"
+          className="pointer-events-none mb-8 h-44 w-full sm:h-56 md:hidden"
           style={{
             WebkitMaskImage:
               'radial-gradient(ellipse 70% 80% at 50% 50%, #000 40%, transparent 85%)',
