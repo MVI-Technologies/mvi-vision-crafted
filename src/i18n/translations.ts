@@ -26,8 +26,13 @@ export const translations = {
     'nav.about': 'Sobre',
     'nav.contact': 'Contato',
     'nav.selectLanguage': 'Selecionar idioma',
+    'nav.cta': 'Vamos criar',
+    'nav.toggleTheme': 'Alternar tema',
+    'nav.lightMode': 'Modo claro',
+    'nav.darkMode': 'Modo escuro',
 
     // Hero
+    'hero.badge': 'Disponível para novos projetos',
     'hero.line1': 'Design',
     'hero.line2': '& Software',
     'hero.line3': 'makers',
@@ -40,6 +45,20 @@ export const translations = {
     'hero.subheadline': 'Soluções digitais com propósito. Design impecável + engenharia que escala.',
     'hero.ctaPrimary': 'Falar com a MVI',
     'hero.ctaSecondary': 'Ver projetos',
+    'hero.scroll': 'Scroll',
+
+    // Tech stack marquee
+    'tech.label': 'Stack & ferramentas',
+
+    // Stats
+    'stats.projects.value': '8+',
+    'stats.projects.label': 'Projetos entregues',
+    'stats.response.value': '48h',
+    'stats.response.label': 'Tempo de resposta',
+    'stats.tech.value': '15+',
+    'stats.tech.label': 'Tecnologias dominadas',
+    'stats.commitment.value': '100%',
+    'stats.commitment.label': 'Foco em resultado',
 
     // About
     'about.label': '(Sobre)',
@@ -50,9 +69,23 @@ export const translations = {
     'about.bullet2': 'Validamos rápido, escalamos com segurança.',
     'about.bullet3': 'Design que converte, código que aguenta.',
 
+    // Process
+    'process.label': '(Processo)',
+    'process.title': 'Como trabalhamos',
+    'process.description': 'Um método claro, do briefing à entrega. Sem ruído, com transparência em cada etapa.',
+    'process.step1.title': 'Descoberta',
+    'process.step1.description': 'Entendemos o negócio, o público e os objetivos. Alinhamos escopo e prioridades.',
+    'process.step2.title': 'Design',
+    'process.step2.description': 'Protótipos navegáveis e interface de alto padrão, validados rápido com você.',
+    'process.step3.title': 'Engenharia',
+    'process.step3.description': 'Código limpo, performático e escalável. Integrações e automações na base.',
+    'process.step4.title': 'Lançamento',
+    'process.step4.description': 'Deploy, testes e acompanhamento. Evoluímos o produto com dados reais.',
+
     // Services
     'services.label': '(Serviços)',
     'services.title': 'Serviços',
+    'services.description': 'Da primeira ideia ao produto no ar: cuidamos de design, engenharia e marca com o mesmo padrão de qualidade.',
     'services.service1.title': 'UI/UX & Interface',
     'services.service1.description': 'Interfaces que parecem simples — porque foram bem pensadas.',
     'services.service1.approaches': 'Design visual, Hierarquia, Componentes, Acessibilidade, Conversão',
@@ -69,7 +102,15 @@ export const translations = {
     // Projects
     'projects.label': '(Projetos)',
     'projects.title': 'Projetos',
+    'projects.description': 'Uma seleção de produtos e interfaces que projetamos e construímos — do sistema interno à landing page de conversão.',
     'projects.viewCase': 'Ver case',
+    'projects.viewLive': 'Ver ao vivo',
+    'projects.copyLink': 'Copiar link',
+    'projects.featured': 'Destaque',
+    'projects.allTags': 'Todos',
+    'projects.kindSystems': 'Sistemas',
+    'projects.kindLanding': 'Landing Pages',
+    'projects.empty': 'Nenhum projeto encontrado para esse filtro.',
     'projects.category.system': 'Sistema',
     'projects.category.platform': 'Plataforma',
     'projects.category.dashboard': 'Dashboard',
@@ -78,44 +119,19 @@ export const translations = {
     'projects.problem': 'Problema',
     'projects.solution': 'Solução',
     'projects.result': 'Resultado',
+    'projects.highlights': 'Destaques',
     'projects.stack': 'Tags',
     'projects.visual': 'Visual',
-    
-    // Project details
-    'projects.atlas.tagline': 'Gestão operacional para indústrias de grande porte.',
-    'projects.atlas.problem': 'Processos fragmentados em planilhas e sistemas legados, gerando retrabalho e falta de visibilidade.',
-    'projects.atlas.solution': 'Plataforma unificada com dashboards em tempo real, automação de workflows e integrações com ERPs existentes.',
-    'projects.atlas.result': 'Redução expressiva no tempo de operação e maior previsibilidade nas entregas.',
-    
-    'projects.aurora.tagline': 'Fintech para gestão de recebíveis.',
-    'projects.aurora.problem': 'Empresas sem acesso rápido a antecipação de recebíveis e análise de crédito.',
-    'projects.aurora.solution': 'Plataforma white-label para bancos e fintechs, com motor de análise de risco e integração bancária.',
-    'projects.aurora.result': 'Aumento significativo na velocidade de onboarding e aprovação de operações.',
-    
-    'projects.nexo.tagline': 'Visibilidade total da cadeia logística.',
-    'projects.nexo.problem': 'Falta de rastreabilidade e comunicação entre transportadoras, armazéns e clientes finais.',
-    'projects.nexo.solution': 'Dashboard integrado com tracking em tempo real, alertas automatizados e relatórios de performance.',
-    'projects.nexo.result': 'Melhoria na satisfação do cliente final e redução de ocorrências.',
-    
-    'projects.vertice.tagline': 'Presença digital para rede de clínicas.',
-    'projects.vertice.problem': 'Site desatualizado, baixa conversão e dificuldade de agendamento online.',
-    'projects.vertice.solution': 'Redesign completo com foco em conversão, integração com sistema de agendamento e SEO técnico.',
-    'projects.vertice.result': 'Crescimento consistente em agendamentos via site e melhor posicionamento orgânico.',
-    
-    'projects.prisma.tagline': 'Plataforma de ensino adaptativo.',
-    'projects.prisma.problem': 'Conteúdo educacional genérico que não atendia às necessidades individuais dos alunos.',
-    'projects.prisma.solution': 'App mobile com trilhas personalizadas, gamificação e acompanhamento de progresso para pais e professores.',
-    'projects.prisma.result': 'Engajamento elevado e melhora nos indicadores de aprendizagem.',
-    
-    'projects.orbita.tagline': 'CRM para times de vendas B2B.',
-    'projects.orbita.problem': 'Vendedores perdiam oportunidades por falta de organização e follow-ups esquecidos.',
-    'projects.orbita.solution': 'CRM intuitivo com automação de follow-up, scoring de leads e integração com e-mail e WhatsApp.',
-    'projects.orbita.result': 'Aumento na taxa de conversão e ciclo de vendas mais curto.',
 
     // Contact
     'contact.label': '(Contato)',
     'contact.headline': 'Sua próxima entrega começa numa conversa.',
+    'contact.subheadline': 'Conte o que você quer construir. Respondemos rápido e sem enrolação.',
     'contact.cta': 'Vamos criar',
+    'contact.formTitle': 'Envie uma mensagem',
+    'contact.directTitle': 'Ou fale direto',
+    'contact.whatsappDirect': 'WhatsApp',
+    'contact.followTitle': 'Acompanhe',
     'contact.nameLabel': 'Nome',
     'contact.namePlaceholder': 'Seu nome',
     'contact.emailLabel': 'E-mail',
@@ -139,10 +155,19 @@ export const translations = {
     'contact.successMessage': 'Entraremos em contato em breve.',
     'contact.errorTitle': 'Erro ao enviar',
     'contact.errorMessage': 'Tente novamente mais tarde.',
+    'contact.validation.name': 'Informe seu nome.',
+    'contact.validation.email': 'Informe um e-mail válido.',
+    'contact.validation.projectType': 'Selecione um tipo de projeto.',
+    'contact.validation.message': 'Conte um pouco sobre o projeto (mín. 10 caracteres).',
 
     // Footer
     'footer.copyright': '© 2026 MVI Tech',
     'footer.tagline': 'Design & Software makers',
+    'footer.madeWith': 'Feito com cuidado em São Paulo, Brasil.',
+    'footer.backToTop': 'Voltar ao topo',
+    'footer.navTitle': 'Navegação',
+    'footer.contactTitle': 'Contato',
+    'footer.rights': 'Todos os direitos reservados.',
 
     // Chatbot
     'chatbot.tooltip': 'Tirar dúvidas de negócio',
@@ -181,8 +206,13 @@ export const translations = {
     'nav.about': 'About',
     'nav.contact': 'Contact',
     'nav.selectLanguage': 'Select language',
+    'nav.cta': "Let's create",
+    'nav.toggleTheme': 'Toggle theme',
+    'nav.lightMode': 'Light mode',
+    'nav.darkMode': 'Dark mode',
 
     // Hero
+    'hero.badge': 'Available for new projects',
     'hero.line1': 'Design',
     'hero.line2': '& Software',
     'hero.line3': 'makers',
@@ -195,6 +225,20 @@ export const translations = {
     'hero.subheadline': 'Purpose-driven digital solutions. Impeccable design + engineering that scales.',
     'hero.ctaPrimary': 'Talk to MVI',
     'hero.ctaSecondary': 'View projects',
+    'hero.scroll': 'Scroll',
+
+    // Tech stack marquee
+    'tech.label': 'Stack & tools',
+
+    // Stats
+    'stats.projects.value': '8+',
+    'stats.projects.label': 'Projects delivered',
+    'stats.response.value': '48h',
+    'stats.response.label': 'Response time',
+    'stats.tech.value': '15+',
+    'stats.tech.label': 'Technologies mastered',
+    'stats.commitment.value': '100%',
+    'stats.commitment.label': 'Outcome focused',
 
     // About
     'about.label': '(About)',
@@ -205,9 +249,23 @@ export const translations = {
     'about.bullet2': 'We validate fast, scale safely.',
     'about.bullet3': 'Design that converts, code that endures.',
 
+    // Process
+    'process.label': '(Process)',
+    'process.title': 'How we work',
+    'process.description': 'A clear method, from brief to launch. No noise, full transparency at every step.',
+    'process.step1.title': 'Discovery',
+    'process.step1.description': 'We understand the business, audience, and goals. We align scope and priorities.',
+    'process.step2.title': 'Design',
+    'process.step2.description': 'Navigable prototypes and high-end interfaces, validated quickly with you.',
+    'process.step3.title': 'Engineering',
+    'process.step3.description': 'Clean, performant, scalable code. Integrations and automation at the core.',
+    'process.step4.title': 'Launch',
+    'process.step4.description': 'Deploy, testing, and follow-up. We evolve the product with real data.',
+
     // Services
     'services.label': '(Services)',
-    'services.title': 'Services.',
+    'services.title': 'Services',
+    'services.description': 'From the first idea to a live product: design, engineering, and brand handled with the same standard of quality.',
     'services.service1.title': 'UI/UX & Interface',
     'services.service1.description': 'Interfaces that look simple — because they were well thought out.',
     'services.service1.approaches': 'Visual design, Hierarchy, Components, Accessibility, Conversion',
@@ -224,7 +282,15 @@ export const translations = {
     // Projects
     'projects.label': '(Projects)',
     'projects.title': 'Projects',
+    'projects.description': 'A selection of products and interfaces we designed and built — from internal systems to conversion landing pages.',
     'projects.viewCase': 'View case',
+    'projects.viewLive': 'View live',
+    'projects.copyLink': 'Copy link',
+    'projects.featured': 'Featured',
+    'projects.allTags': 'All',
+    'projects.kindSystems': 'Systems',
+    'projects.kindLanding': 'Landing Pages',
+    'projects.empty': 'No projects found for this filter.',
     'projects.category.system': 'System',
     'projects.category.platform': 'Platform',
     'projects.category.dashboard': 'Dashboard',
@@ -233,44 +299,19 @@ export const translations = {
     'projects.problem': 'Problem',
     'projects.solution': 'Solution',
     'projects.result': 'Result',
+    'projects.highlights': 'Highlights',
     'projects.stack': 'Stack',
     'projects.visual': 'Visual',
-    
-    // Project details
-    'projects.atlas.tagline': 'Operational management for large industries.',
-    'projects.atlas.problem': 'Fragmented processes in spreadsheets and legacy systems, causing rework and lack of visibility.',
-    'projects.atlas.solution': 'Unified platform with real-time dashboards, workflow automation, and integrations with existing ERPs.',
-    'projects.atlas.result': 'Significant reduction in operation time and greater delivery predictability.',
-    
-    'projects.aurora.tagline': 'Fintech for receivables management.',
-    'projects.aurora.problem': 'Companies without quick access to receivables anticipation and credit analysis.',
-    'projects.aurora.solution': 'White-label platform for banks and fintechs, with risk analysis engine and banking integration.',
-    'projects.aurora.result': 'Significant increase in onboarding speed and operation approval.',
-    
-    'projects.nexo.tagline': 'Total visibility of the logistics chain.',
-    'projects.nexo.problem': 'Lack of traceability and communication between carriers, warehouses, and end customers.',
-    'projects.nexo.solution': 'Integrated dashboard with real-time tracking, automated alerts, and performance reports.',
-    'projects.nexo.result': 'Improved end-customer satisfaction and reduced incidents.',
-    
-    'projects.vertice.tagline': 'Digital presence for clinic network.',
-    'projects.vertice.problem': 'Outdated website, low conversion, and difficulty with online scheduling.',
-    'projects.vertice.solution': 'Complete redesign focused on conversion, scheduling system integration, and technical SEO.',
-    'projects.vertice.result': 'Consistent growth in website appointments and better organic positioning.',
-    
-    'projects.prisma.tagline': 'Adaptive learning platform.',
-    'projects.prisma.problem': 'Generic educational content that didn\'t meet individual student needs.',
-    'projects.prisma.solution': 'Mobile app with personalized tracks, gamification, and progress tracking for parents and teachers.',
-    'projects.prisma.result': 'High engagement and improvement in learning indicators.',
-    
-    'projects.orbita.tagline': 'CRM for B2B sales teams.',
-    'projects.orbita.problem': 'Salespeople were losing opportunities due to lack of organization and forgotten follow-ups.',
-    'projects.orbita.solution': 'Intuitive CRM with follow-up automation, lead scoring, and email/WhatsApp integration.',
-    'projects.orbita.result': 'Increased conversion rate and shorter sales cycle.',
 
     // Contact
     'contact.label': '(Contact)',
     'contact.headline': 'Your next delivery starts with a conversation.',
-    'contact.cta': 'Let\'s create',
+    'contact.subheadline': "Tell us what you want to build. We reply fast and skip the fluff.",
+    'contact.cta': "Let's create",
+    'contact.formTitle': 'Send a message',
+    'contact.directTitle': 'Or reach out directly',
+    'contact.whatsappDirect': 'WhatsApp',
+    'contact.followTitle': 'Follow',
     'contact.nameLabel': 'Name',
     'contact.namePlaceholder': 'Your name',
     'contact.emailLabel': 'Email',
@@ -294,10 +335,19 @@ export const translations = {
     'contact.successMessage': 'We\'ll be in touch soon.',
     'contact.errorTitle': 'Error sending',
     'contact.errorMessage': 'Please try again later.',
+    'contact.validation.name': 'Please enter your name.',
+    'contact.validation.email': 'Please enter a valid email.',
+    'contact.validation.projectType': 'Please select a project type.',
+    'contact.validation.message': 'Tell us a bit about the project (min. 10 characters).',
 
     // Footer
     'footer.copyright': '© 2026 MVI Tech',
     'footer.tagline': 'Design & Software makers',
+    'footer.madeWith': 'Crafted with care in São Paulo, Brazil.',
+    'footer.backToTop': 'Back to top',
+    'footer.navTitle': 'Navigation',
+    'footer.contactTitle': 'Contact',
+    'footer.rights': 'All rights reserved.',
 
     // Chatbot
     'chatbot.tooltip': 'Ask about business',

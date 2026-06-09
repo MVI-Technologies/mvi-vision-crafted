@@ -1,10 +1,13 @@
 import { useState, useRef, memo } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { Plus, Palette, Code2, Server, Sparkles } from 'lucide-react';
 import { useI18n, TranslationKey } from '@/i18n/LanguageProvider';
+import { EASE_OUT_EXPO } from '@/lib/motion';
+import SectionHeading from '@/components/common/SectionHeading';
 
 interface ServiceData {
   index: string;
+  icon: typeof Palette;
   titleKey: TranslationKey;
   descriptionKey: TranslationKey;
   approachesKey: TranslationKey;
@@ -13,35 +16,39 @@ interface ServiceData {
 const servicesData: ServiceData[] = [
   {
     index: '001',
+    icon: Palette,
     titleKey: 'services.service1.title',
     descriptionKey: 'services.service1.description',
     approachesKey: 'services.service1.approaches',
   },
   {
     index: '002',
+    icon: Code2,
     titleKey: 'services.service2.title',
     descriptionKey: 'services.service2.description',
     approachesKey: 'services.service2.approaches',
   },
   {
     index: '003',
+    icon: Server,
     titleKey: 'services.service3.title',
     descriptionKey: 'services.service3.description',
     approachesKey: 'services.service3.approaches',
   },
   {
     index: '004',
+    icon: Sparkles,
     titleKey: 'services.service4.title',
     descriptionKey: 'services.service4.description',
     approachesKey: 'services.service4.approaches',
   },
 ];
 
-const ServiceItem = memo(function ServiceItem({ 
-  service, 
-  isOpen, 
-  onToggle, 
-  index 
+const ServiceItem = memo(function ServiceItem({
+  service,
+  isOpen,
+  onToggle,
+  index,
 }: {
   service: ServiceData;
   isOpen: boolean;
@@ -51,6 +58,7 @@ const ServiceItem = memo(function ServiceItem({
   const { t } = useI18n();
   const itemRef = useRef(null);
   const isInView = useInView(itemRef, { once: true, margin: '-50px' });
+  const Icon = service.icon;
 
   const approaches = t(service.approachesKey).split(', ');
 
@@ -59,48 +67,59 @@ const ServiceItem = memo(function ServiceItem({
       ref={itemRef}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="border-b border-border"
+      transition={{ duration: 0.6, delay: index * 0.08, ease: EASE_OUT_EXPO }}
+      className="group border-b border-border"
     >
       <button
         onClick={onToggle}
-        className="w-full py-8 flex items-start gap-6 text-left group hover:bg-accent/30 transition-colors duration-300 px-4 -mx-4"
+        className="flex w-full items-center gap-5 py-7 text-left transition-colors duration-300"
         aria-expanded={isOpen}
       >
-        <span className="index-label pt-1">({service.index})</span>
+        <span
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-all duration-300 ${
+            isOpen ? 'bg-brand-1/20 text-brand-1' : 'bg-secondary text-muted-foreground group-hover:text-foreground'
+          }`}
+        >
+          <Icon className="h-5 w-5" />
+        </span>
+
+        <span className="index-label hidden shrink-0 sm:block">({service.index})</span>
+
         <div className="flex-1">
-          <h3 className="display-md group-hover:translate-x-2 transition-transform duration-300">
+          <h3
+            className={`display-md text-2xl transition-all duration-300 md:text-3xl ${
+              isOpen ? 'text-gradient-brand' : 'group-hover:translate-x-1'
+            }`}
+          >
             {t(service.titleKey)}
           </h3>
         </div>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="pt-2"
+
+        <motion.span
+          animate={{ rotate: isOpen ? 135 : 0 }}
+          transition={{ duration: 0.3, ease: EASE_OUT_EXPO }}
+          className="shrink-0 text-muted-foreground group-hover:text-foreground"
         >
-          <ChevronDown className="w-6 h-6 text-muted-foreground" />
-        </motion.div>
+          <Plus className="h-6 w-6" />
+        </motion.span>
       </button>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
             className="overflow-hidden"
           >
-            <div className="pb-8 pl-16 pr-4">
-              <p className="body-lg text-muted-foreground mb-6">
+            <div className="pb-8 pl-0 sm:pl-[5.5rem]">
+              <p className="body-lg mb-6 max-w-2xl text-muted-foreground">
                 {t(service.descriptionKey)}
               </p>
               <div className="flex flex-wrap gap-2">
                 {approaches.map((approach) => (
-                  <span
-                    key={approach}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-medium rounded-full"
-                  >
+                  <span key={approach} className="tag">
                     {approach}
                   </span>
                 ))}
@@ -116,25 +135,17 @@ const ServiceItem = memo(function ServiceItem({
 const Services = memo(function Services() {
   const { t } = useI18n();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="servicos" ref={sectionRef} className="section-spacing">
+    <section id="servicos" className="section-spacing">
       <div className="section-container">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16"
-        >
-          <span className="mono-label text-muted-foreground mb-4 block">{t('services.label')}</span>
-          <h2 className="display-lg">{t('services.title')}</h2>
-        </motion.div>
+        <SectionHeading
+          label={t('services.label')}
+          title={t('services.title')}
+          description={t('services.description')}
+        />
 
-        {/* Services accordion */}
-        <div>
+        <div className="border-t border-border">
           {servicesData.map((service, index) => (
             <ServiceItem
               key={service.index}

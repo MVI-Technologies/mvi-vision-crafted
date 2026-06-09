@@ -1,15 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* MVI Tech Design System - Premium Editorial Dark Theme */
-/* Inspired by cria.digital - Minimalist, high contrast, editorial tech */
+/* ============================================================
+   MVI Tech Design System — Premium Editorial Dark + Brand Glow
+   Monochrome editorial base with a restrained professional blue accent.
+   ============================================================ */
 
 @layer base {
   :root {
-    /* Core palette - Deep dark with subtle warmth */
+    /* ===== Light theme (default tokens + shared) ===== */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    /* Primary - Near-black for max contrast on light */
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Secondary - Subtle gray for supporting elements */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 25%;
+
+    /* Muted - For subtle text and borders */
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 40%;
+
+    /* Accent - Soft highlight (shadcn) */
+    --accent: 0 0% 94%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 0 0% 60%;
+
+    --radius: 0.5rem;
+
+    /* Brand accent — monochrome (Resend-style black & white) */
+    --brand-1: 0 0% 16%;
+    --brand-2: 0 0% 42%;
+
+    /* Glow tokens */
+    --glow-primary: 0 0% 30%;
+    --glow-secondary: 0 0% 55%;
+    --noise-opacity: 0.02;
+
+    /* Typography scale */
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Spacing rhythm */
+    --section-padding: clamp(1rem, 3vw, 2.5rem);
+    --container-max: 1400px;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 25%;
+    --sidebar-primary: 0 0% 9%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 89%;
+    --sidebar-ring: 0 0% 60%;
+  }
+
+  .dark {
+    /* ===== Dark theme — Deep dark with subtle warmth ===== */
     --background: 0 0% 4%;
     --foreground: 0 0% 96%;
 
@@ -29,33 +95,26 @@
 
     /* Muted - For subtle text and borders */
     --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 50%;
+    --muted-foreground: 0 0% 55%;
 
-    /* Accent - Soft highlight */
+    /* Accent - Soft highlight (shadcn) */
     --accent: 0 0% 16%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62% 50%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 16%;
     --input: 0 0% 16%;
     --ring: 0 0% 40%;
 
-    --radius: 0.25rem;
+    --noise-opacity: 0.035;
 
-    /* Custom tokens for editorial design */
-    --glow-primary: 220 60% 50%;
-    --glow-secondary: 280 40% 40%;
-    --noise-opacity: 0.03;
-    
-    /* Typography scale */
-    --font-display: 'Inter', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-    
-    /* Spacing rhythm */
-    --section-padding: clamp(4rem, 12vw, 10rem);
-    --container-max: 1400px;
+    /* Brand accent — monochrome (light accent on near-black) */
+    --brand-1: 0 0% 92%;
+    --brand-2: 0 0% 62%;
+    --glow-primary: 0 0% 80%;
+    --glow-secondary: 0 0% 52%;
 
     --sidebar-background: 0 0% 6%;
     --sidebar-foreground: 0 0% 80%;
@@ -81,35 +140,64 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Selection styling */
   ::selection {
-    @apply bg-primary text-primary-foreground;
+    background: hsl(var(--brand-1) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Respect reduced motion globally */
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Keep the decorative tech marquee scrolling — it conveys no critical
+       information and looks broken when frozen. !important is required to beat
+       the universal reduced-motion override above. */
+    .animate-marquee,
+    .animate-marquee-reverse {
+      animation-duration: 40s !important;
+      animation-iteration-count: infinite !important;
+    }
   }
 }
 
 @layer components {
-  /* Editorial typography classes */
+
+  /* ---------- Editorial typography ---------- */
   .display-xl {
-    @apply text-[clamp(3rem,12vw,10rem)] font-black leading-[0.9] tracking-[-0.04em];
+    font-size: clamp(2.25rem, 10vw, 10rem);
+    @apply font-bold leading-[0.9] tracking-[-0.04em];
     font-family: var(--font-display);
   }
 
   .display-lg {
-    @apply text-[clamp(2rem,6vw,5rem)] font-bold leading-[1] tracking-[-0.03em];
+    font-size: clamp(2rem, 6vw, 5rem);
+    @apply font-bold leading-[1] tracking-[-0.03em];
     font-family: var(--font-display);
   }
 
   .display-md {
-    @apply text-[clamp(1.5rem,4vw,3rem)] font-semibold leading-[1.1] tracking-[-0.02em];
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    @apply font-semibold leading-[1.1] tracking-[-0.02em];
     font-family: var(--font-display);
   }
 
   .body-lg {
-    @apply text-[clamp(1rem,1.5vw,1.25rem)] font-light leading-relaxed;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    @apply font-light leading-relaxed;
   }
 
   .body-md {
@@ -122,11 +210,11 @@
   }
 
   .mono-label {
-    @apply text-[10px] font-medium tracking-[0.2em] uppercase opacity-50;
+    @apply text-[10px] font-medium tracking-[0.2em] uppercase opacity-60;
     font-family: var(--font-mono);
   }
 
-  /* Noise/grain overlay */
+  /* ---------- Noise / grain overlay ---------- */
   .noise-overlay {
     position: fixed;
     inset: 0;
@@ -136,38 +224,87 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   }
 
-  /* Gradient backgrounds */
+  /* ---------- Gradient backgrounds ---------- */
   .gradient-dark {
-    background: 
-      radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--glow-primary) / 0.15), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 50%, hsl(var(--glow-secondary) / 0.08), transparent),
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--glow-primary) / 0.18), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 50%, hsl(var(--glow-secondary) / 0.10), transparent),
       hsl(var(--background));
   }
 
   .gradient-cta {
-    background: 
-      radial-gradient(ellipse 100% 80% at 50% 100%, hsl(var(--glow-primary) / 0.2), transparent),
-      radial-gradient(ellipse 80% 60% at 20% 80%, hsl(var(--glow-secondary) / 0.1), transparent),
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 100%, hsl(var(--glow-primary) / 0.20), transparent),
+      radial-gradient(ellipse 80% 60% at 20% 80%, hsl(var(--glow-secondary) / 0.12), transparent),
       hsl(var(--card));
   }
 
-  /* Animated underline for links */
+  /* Subtle dotted grid background layer */
+  .grid-pattern {
+    background-image: radial-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 40%, transparent 100%);
+  }
+
+  /* ---------- Glassmorphism ---------- */
+  .glass {
+    background: hsl(var(--card) / 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+  }
+
+  .glass-strong {
+    background: hsl(var(--background) / 0.75);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid hsl(var(--foreground) / 0.10);
+  }
+
+  /* ---------- Gradient border card (mask technique) ---------- */
+  .gradient-border {
+    position: relative;
+    border-radius: var(--radius);
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(var(--brand-1) / 0.6), hsl(var(--brand-2) / 0.2) 40%, transparent 70%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+
+  /* ---------- Links ---------- */
   .link-underline {
     @apply relative inline-block;
   }
 
   .link-underline::after {
     content: '';
-    @apply absolute left-0 bottom-0 w-full h-px bg-current origin-left;
+    @apply absolute left-0 bottom-0 w-full h-px origin-left;
+    background: linear-gradient(90deg, hsl(var(--brand-1)), hsl(var(--brand-2)));
     transform: scaleX(0);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .link-underline:hover::after {
     transform: scaleX(1);
   }
 
-  /* Section containers */
+  /* ---------- Layout ---------- */
   .section-container {
     @apply mx-auto w-full px-6 md:px-8 lg:px-12;
     max-width: var(--container-max);
@@ -175,20 +312,18 @@
 
   .section-spacing {
     padding-top: var(--section-padding);
-    padding-bottom: var(--section-padding);
+    padding-bottom: clamp(1rem, 3vw, 2.5rem);
   }
 
-  /* Divider line */
   .divider {
-    @apply w-full h-px bg-border;
+    @apply w-full h-px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
   }
 
-  /* Index label style (001) */
   .index-label {
     @apply mono-label text-muted-foreground;
   }
 
-  /* Hover lift effect */
   .hover-lift {
     @apply transition-transform duration-300;
   }
@@ -197,36 +332,64 @@
     transform: translateY(-2px);
   }
 
-  /* Button variants */
+  /* ---------- Buttons ---------- */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-medium text-sm tracking-wide transition-all duration-300;
+    @apply relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md bg-primary text-primary-foreground font-medium text-sm tracking-wide transition-all duration-300 overflow-hidden;
   }
 
   .btn-primary:hover {
     @apply bg-foreground/90;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px -10px hsl(var(--foreground) / 0.35);
+  }
+
+  .btn-accent {
+    @apply relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md font-medium text-sm tracking-wide transition-all duration-300 overflow-hidden;
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    background: hsl(var(--foreground) / 0.88);
+    box-shadow: 0 14px 44px -12px hsl(var(--foreground) / 0.35);
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-8 py-4 border border-border text-foreground font-medium text-sm tracking-wide transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md border border-border text-foreground font-medium text-sm tracking-wide transition-all duration-300;
   }
 
   .btn-outline:hover {
-    @apply border-foreground/50 bg-foreground/5;
+    @apply bg-foreground/5;
+    border-color: hsl(var(--brand-1) / 0.5);
+    transform: translateY(-2px);
   }
 
-  /* Form inputs */
+  /* ---------- Form inputs ---------- */
   .input-editorial {
-    @apply w-full bg-transparent border-b border-border py-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors duration-300;
+    @apply w-full bg-transparent border-b border-border py-4 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors duration-300;
   }
 
   .input-editorial:focus {
-    @apply border-foreground;
+    border-color: hsl(var(--brand-1));
   }
 
-  /* Scrollbar styling */
+  /* ---------- Pills / tags ---------- */
+  .tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-colors duration-300;
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .tag:hover {
+    border-color: hsl(var(--brand-1) / 0.5);
+    color: hsl(var(--foreground));
+  }
+
+  /* ---------- Scrollbar ---------- */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
@@ -235,25 +398,66 @@
 
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--muted));
-    border-radius: 3px;
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground));
+    background: hsl(var(--brand-1) / 0.6);
   }
 }
 
 @layer utilities {
-  /* Text gradient */
+
+  /* Monochrome text gradient */
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--muted-foreground)));
   }
 
+  /* Brand (professional blue) text gradient */
+  .text-gradient-brand {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, hsl(var(--brand-1)), hsl(var(--brand-2)));
+    background-size: 200% 200%;
+  }
+
+  .text-gradient-brand-animated {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, hsl(var(--brand-1)), hsl(var(--brand-2)), hsl(var(--brand-1)));
+    background-size: 200% 200%;
+    animation: gradient-shift 6s ease infinite;
+  }
+
+  /* Glow helpers */
+  .glow-accent {
+    box-shadow: 0 0 60px -15px hsl(var(--brand-1) / 0.5);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 30px hsl(var(--brand-1) / 0.35);
+  }
+
+  /* Aurora animated background blob */
+  .aurora-blob {
+    background: radial-gradient(circle at center, hsl(var(--brand-1) / 0.5), transparent 70%);
+    filter: blur(60px);
+  }
+
   /* Fade mask for text echo effect */
   .text-echo {
     @apply absolute inset-0 select-none pointer-events-none;
-    opacity: 0.06;
+    opacity: 0.05;
     transform: translateY(6px);
+  }
+
+  /* Edge fade mask (for marquees) */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .pause-on-hover:hover,
+  .pause-on-hover:hover * {
+    animation-play-state: paused;
   }
 }
